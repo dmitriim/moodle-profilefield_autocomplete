@@ -23,6 +23,12 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class profile_field_autocomplete extends profile_field_base {
+
+    /**
+     * Unique values delimiter for storing values as a string in DB.
+     */
+    public const DELIMITER = '#||#';
+
     /** @var array $options */
     public $options;
 
@@ -68,7 +74,7 @@ class profile_field_autocomplete extends profile_field_base {
 
         // Set the data key.
         if ($this->data !== null) {
-            $this->datakey = explode(', ', $this->data);
+            $this->datakey = explode(self::DELIMITER, $this->data);
         }
     }
 
@@ -82,6 +88,7 @@ class profile_field_autocomplete extends profile_field_base {
         $mform->addElement('autocomplete', $this->inputname, format_string($this->field->name), $this->options, [
             'multiple' => $this->multiple
         ]);
+        $mform->setType($this->inputname, PARAM_TEXT);
     }
 
     /**
@@ -127,7 +134,7 @@ class profile_field_autocomplete extends profile_field_base {
         }
 
         // Convert values into string to store it in database.
-        return implode(', ', $data);
+        return implode(self::DELIMITER, $data);
     }
 
     /**
@@ -203,5 +210,15 @@ class profile_field_autocomplete extends profile_field_base {
      */
     public function get_field_properties() {
         return array(PARAM_TEXT, NULL_NOT_ALLOWED);
+    }
+
+    /**
+     * Display the data for this field
+     * @return string
+     */
+    public function display_data() {
+        $options = new stdClass();
+        $options->para = false;
+        return format_text(str_replace(self::DELIMITER, ', ', $this->data), FORMAT_MOODLE, $options);
     }
 }
