@@ -19,7 +19,7 @@
  *
  * @package     profilefield_autocomplete
  * @author      Dmitrii Metelkin <dnmetelk@gmail.com>
- * @copyright   Dmitrii Metelkin <dnmetelk@gmail.com>
+ * @copyright   2024 Dmitrii Metelkin
  * @license     https://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
